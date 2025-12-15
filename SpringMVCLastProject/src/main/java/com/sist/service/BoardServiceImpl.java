@@ -1,0 +1,70 @@
+package com.sist.service;
+import java.util.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.sist.dao.*;
+import com.sist.vo.*;
+@Service
+public class BoardServiceImpl implements BoardService{
+	@Autowired
+	private BoardDAO bDao;
+
+	@Override
+	public List<BoardVO> boardListData(int start, int end) {
+		// TODO Auto-generated method stub
+		return bDao.boardListData(start, end);
+	}
+
+	@Override
+	public int boardRowCount() {
+		// TODO Auto-generated method stub
+		return bDao.boardRowCount();
+	}
+
+	@Override
+	public void boardInsert(BoardVO vo) {
+		// TODO Auto-generated method stub
+		bDao.boardInsert(vo);
+	}
+
+	@Override
+	public BoardVO boardDetailData(int no) {
+		// TODO Auto-generated method stub
+		return bDao.boardDetailData(no);
+	}
+
+	@Override
+	public String boardDelete(int no, String pwd) {
+		// TODO Auto-generated method stub
+		String result="no";
+		String db_pwd=bDao.boardGetPassword(no);
+		if(db_pwd.equals(pwd))
+		{
+			result="yes";
+			bDao.boardDelete(no);
+		}
+		return result;
+	}
+
+	@Override
+	public String boardUpdate(BoardVO vo) {
+		// TODO Auto-generated method stub
+		String result="no";
+		String db_pwd=bDao.boardGetPassword(vo.getNo());
+		if(db_pwd.equals(vo.getPwd()))
+		{
+			result="yes";
+			bDao.boardUpdate(vo);
+		}
+		return result;
+	}
+
+	@Override
+	public BoardVO boardUpdateData(int no) {
+		// TODO Auto-generated method stub
+		return bDao.boardUpdateData(no);
+	}
+	
+}
